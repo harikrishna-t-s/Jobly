@@ -23,7 +23,7 @@ public class SecurityConfig {
         http
             .authenticationProvider(authenticationProvider)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/auth/login", "/auth/register").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/images/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/", "/jobs", "/jobs/*").permitAll()
                 .requestMatchers("/admin/**").hasRole("SUPER_ADMIN")

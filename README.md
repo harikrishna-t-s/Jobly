@@ -1,386 +1,411 @@
-# Jobly — Spring Boot Job Posting Platform
+# 🎯 Jobly - Job Posting Platform
 
-> A clean, role-based job posting website built with Spring Boot, Thymeleaf, MySQL and Spring Security. Users can sign in as Candidates, Hiring Managers, Companies or Super Admins; Companies/Hiring Managers can post jobs; Candidates can view and apply; Super Admin manages the whole platform.
+<div align="center">
 
----
+![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.5-brightgreen?style=for-the-badge&logo=spring)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?style=for-the-badge&logo=mysql)
+![Thymeleaf](https://img.shields.io/badge/Thymeleaf-3.1-green?style=for-the-badge&logo=thymeleaf)
+![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
 
-## Table of Contents
+**A modern, role-based job posting platform built with Spring Boot**
 
-1. [Project Overview](#project-overview)
-2. [Key Features](#key-features)
-3. [Architecture & Project Structure](#architecture--project-structure)
-4. [Tech Stack & Dependencies](#tech-stack--dependencies)
-5. [Data Model (high-level)](#data-model-high-level)
-6. [Authentication & Authorization](#authentication--authorization)
-7. [Security & Best Practices](#security--best-practices)
-8. [Exception Handling, Validation & Logging](#exception-handling-validation--logging)
-9. [Frontend (Thymeleaf) notes](#frontend-thymeleaf-notes)
-10. [Configuration & Running Locally](#configuration--running-locally)
-11. [Swagger / API Documentation](#swagger--api-documentation)
-12. [Testing](#testing)
-13. [Deployment](#deployment)
-14. [Coding Standards & Best Practices](#coding-standards--best-practices)
-15. [Contributing](#contributing)
-16. [Roadmap / Next steps](#roadmap--next-steps)
+[Features](#-features) • [Quick Start](#-quick-start) • [Demo Accounts](#-demo-accounts) • [Documentation](#-documentation)
+
+</div>
 
 ---
 
-## Project Overview
+## 📋 Overview
 
-Jobly is a role-based job posting platform where:
+Jobly is a full-featured job posting and application platform that connects job seekers with employers. Built with enterprise-grade technologies, it demonstrates best practices in Spring Boot development, security, and modern web architecture.
 
-* **Candidates** can browse and apply to jobs.
-* **Hiring Managers / Companies** can create/manage job posts and view applicants.
-* **Super Admin** oversees the platform and has top-level privileges.
+### 🎭 User Roles
 
-The project is built using Spring Boot (back end), Thymeleaf (server-side templates), and MySQL (persistent storage). Spring Data JPA will be used to auto-generate database schemas on the first run.
+- **👔 Candidates** - Browse jobs, submit applications, track application status
+- **🏢 Companies** - Create company profiles, post job openings
+- **📊 Hiring Managers** - Manage job postings, review applications
+- **⚙️ Super Admin** - Platform oversight and user management
 
-## Key Features
+---
 
-* Role-based login & access control (Candidate, Company, Hiring Manager, Super Admin)
-* Sign-in page that collects basic details and, depending on the role, asks for extended information
-* CRUD for Job Posts (create, read, update, delete)
-* Candidate job application flow
-* Admin dashboard for managing users, companies and jobs
-* MySQL persistence with JPA auto schema generation on first run
-* Validation, centralised exception handling, and consistent logging
-* Password encryption (BCrypt) and secure session handling
-* Swagger/OpenAPI documentation for APIs
-* Thymeleaf-based frontend — separate HTML and CSS files per page
+## 📸 Screenshots
 
-## Architecture & Project Structure
+### Admin Dashboard
+![Admin Dashboard](assets/AdminDashboard.png)
+*Comprehensive admin panel for managing users, companies, and job postings*
 
-The Java code should follow a layered architecture. Example packaging:
+### Company Portal
+
+![Company Portal](assets/CompanyPortal.png)
+*Company dashboard showing overview and quick actions*
+
+![Company Jobs Posted](assets/CompanyJobsPosted.png)
+*View and manage all job postings for your company*
+
+![Company Job Posting](assets/CompanyJobPosting.png)
+*Create and edit job postings with detailed information*
+
+### Candidate Portal
+
+![Candidate Portal](assets/CandidatePortal.png)
+*Candidate dashboard with personalized job recommendations*
+
+![Candidate Job View](assets/CandidateJobView.png)
+*Detailed job listing view with company information*
+
+![Candidate Job Application](assets/CandidateJobApplication.png)
+*Submit job applications with cover letter and resume*
+
+---
+
+## ✨ Features
+
+### Core Functionality
+- ✅ **Role-Based Access Control** - Secure authentication with 4 distinct user roles
+- ✅ **Job Management** - Full CRUD operations for job postings
+- ✅ **Application System** - Complete job application workflow with status tracking
+- ✅ **Company Profiles** - Dedicated company pages with job listings
+- ✅ **Admin Dashboard** - Comprehensive platform management tools
+
+### Technical Highlights
+- 🔐 **Spring Security** - BCrypt password encryption, session management
+- 📊 **JPA/Hibernate** - Auto-generated database schema with audit trails
+- 🎨 **Thymeleaf Templates** - Server-side rendering with reusable components
+- 📝 **Validation** - Comprehensive input validation and error handling
+- 📚 **API Documentation** - Swagger/OpenAPI integration
+- 🔍 **Exception Handling** - Centralized error management
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- **Java 21** (LTS)
+- **MySQL 8.0+**
+- **Maven 3.6+**
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/jobly.git
+   cd jobly
+   ```
+
+2. **Create MySQL database**
+   ```sql
+   CREATE DATABASE jobly;
+   CREATE USER 'jobly_user'@'localhost' IDENTIFIED BY 'your_password';
+   GRANT ALL PRIVILEGES ON jobly.* TO 'jobly_user'@'localhost';
+   FLUSH PRIVILEGES;
+   ```
+
+3. **Configure application**
+
+   Update `src/main/resources/application.properties`:
+   ```properties
+   spring.datasource.url=jdbc:mysql://localhost:3306/jobly
+   spring.datasource.username=jobly_user
+   spring.datasource.password=your_password
+   ```
+
+4. **Run the application**
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+
+5. **Access the application**
+
+   Open your browser to: `http://localhost:8080`
+
+---
+
+## 👥 Demo Accounts
+
+The application comes with pre-configured test accounts. See [CREDENTIALS.txt](CREDENTIALS.txt) for the complete list.
+
+### Quick Access
+
+| Role | Email | Password |
+|------|-------|----------|
+| Super Admin | admin@jobly.com | Admin@123 |
+| Candidate | john.doe@example.com | Password@123 |
+| Hiring Manager | sarah.williams@techcorp.com | Password@123 |
+
+**Sample Data Included:**
+- 3 Candidates
+- 2 Companies (TechCorp Solutions, Innovate Labs)
+- 5 Job Postings
+- 4 Job Applications
+
+---
+
+## 🏗️ Architecture
+
+### Tech Stack
+
+**Backend**
+- Spring Boot 3.3.5
+- Spring Security 6
+- Spring Data JPA
+- Hibernate ORM
+- MySQL 8.0
+
+**Frontend**
+- Thymeleaf 3.1
+- HTML5 & CSS3
+- JavaScript
+
+**Tools & Libraries**
+- Lombok - Reduce boilerplate code
+- Springdoc OpenAPI - API documentation
+- BCrypt - Password encryption
+- Maven - Build automation
+
+### Project Structure
 
 ```
-com.jobly
-├─ JoblyApplication.java            # main entry point
-├─ config                          # security, swagger, datasource configs
-├─ controller                      # REST / MVC controllers (Thymeleaf views)
-├─ dto                             # DTOs for requests/responses
-├─ exception                       # custom exceptions & handlers
-├─ model                           # JPA entities (User, Role, Company, Job, Application, etc.)
-├─ repository                      # Spring Data JPA repositories
-├─ service                         # business logic (interfaces + impls)
-├─ util                            # helpers, mappers, validators
-└─ web                             # static resources and thymeleaf templates
+com.jobly/
+├── config/              # Configuration classes
+│   ├── SecurityConfig   # Spring Security setup
+│   ├── DataInitializer  # Dummy data seeding
+│   └── OpenApiConfig    # Swagger configuration
+├── controller/          # MVC Controllers
+│   ├── AuthController
+│   ├── JobController
+│   ├── ApplicationController
+│   └── AdminController
+├── dto/                 # Data Transfer Objects
+├── exception/           # Exception handling
+├── model/              # JPA Entities
+│   ├── User
+│   ├── Role
+│   ├── Company
+│   ├── Job
+│   └── JobApplication
+├── repository/         # Spring Data repositories
+├── security/           # Security components
+└── service/            # Business logic
 ```
 
-Layer responsibilities:
+---
 
-* **Model layer**: Entities, JPA mappings, validation annotations
-* **Repository layer**: Spring Data interfaces (extend `JpaRepository`)
-* **Service layer**: Transactional business logic; DTO mapping; exceptions
-* **Controller layer**: Handles web requests; returns Thymeleaf views or JSON
-* **Exception layer**: Custom exceptions + `@ControllerAdvice` for global handling
+## 🗄️ Database Schema
 
-## Tech Stack & Dependencies
+### Core Entities
 
-Minimum dependencies to include (use Maven or Gradle):
+```mermaid
+erDiagram
+    User ||--o{ JobApplication : submits
+    User ||--o{ Job : posts
+    User }o--o{ Role : has
+    Company ||--o{ Job : owns
+    Job ||--o{ JobApplication : receives
 
-* Java 17 or 21 (LTS recommended)
-* Spring Boot (current stable 3.x)
-* Spring Web
-* Spring Security
-* Spring Data JPA (Hibernate)
-* MySQL Connector/J
-* Thymeleaf
-* Spring Boot DevTools
-* Spring Validation (`spring-boot-starter-validation`)
-* Springdoc OpenAPI / Swagger UI (recommended: springdoc-openapi-ui)
-* Lombok (optional but useful for reducing boilerplate)
-* Logback / SLF4J (logging)
-* Flyway or Liquibase (optional — recommended for production DB migrations)
+    User {
+        Long id PK
+        String fullName
+        String email UK
+        String phone
+        String password
+        boolean enabled
+    }
 
-Example Maven dependencies snippet (pom.xml):
+    Company {
+        Long id PK
+        String name UK
+        String description
+        String website
+        String address
+        Long ownerId FK
+    }
 
-```xml
-<!-- simplified excerpt -->
-<dependencies>
-  <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-web</artifactId>
-  </dependency>
-  <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-thymeleaf</artifactId>
-  </dependency>
-  <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-data-jpa</artifactId>
-  </dependency>
-  <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-security</artifactId>
-  </dependency>
-  <dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-j</artifactId>
-  </dependency>
-  <dependency>
-    <groupId>org.springdoc</groupId>
-    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-    <version>2.1.0</version>
-  </dependency>
-  <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-devtools</artifactId>
-    <scope>runtime</scope>
-  </dependency>
-  <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-validation</artifactId>
-  </dependency>
-  <!-- optional -->
-  <dependency>
-    <groupId>org.projectlombok</groupId>
-    <artifactId>lombok</artifactId>
-    <optional>true</optional>
-  </dependency>
-</dependencies>
+    Job {
+        Long id PK
+        String title
+        String description
+        String location
+        EmploymentType type
+        Integer salaryMin
+        Integer salaryMax
+        JobStatus status
+        Long companyId FK
+        Long postedById FK
+    }
+
+    JobApplication {
+        Long id PK
+        Long jobId FK
+        Long candidateId FK
+        String coverLetter
+        String resumeUrl
+        ApplicationStatus status
+    }
 ```
 
-## Data Model (high-level)
+---
 
-Entities to include (recommended):
+## 🔐 Security
 
-* `User` (id, name, email, phone, password, roles, enabled, createdAt)
-* `Role` (ROLE_CANDIDATE, ROLE_COMPANY, ROLE_HIRING_MANAGER, ROLE_SUPER_ADMIN)
-* `Company` (id, name, description, website, address, ownerUser)
-* `Job` (id, title, description, location, employmentType, salaryRange, company, postedBy, createdAt, status)
-* `Application` (id, job, candidate (User), coverLetter, resumeUrl, appliedAt, status)
-* `Audit` fields (createdBy, createdAt, modifiedBy, modifiedAt) — use `@MappedSuperclass` + JPA auditing
+### Authentication & Authorization
 
-Keep entity relationships clear (many-to-one Job→Company; one-to-many Company→Job; many-to-many User↔Role; one-to-many Job→Application).
+- **Session-based authentication** with Spring Security
+- **BCrypt password hashing** with secure work factor
+- **Role-based access control** using method-level security
+- **CSRF protection** enabled for all forms
+- **SQL injection prevention** via JPA prepared statements
 
-**Auto-generation of schemas**: for development you can enable auto DDL by setting `spring.jpa.hibernate.ddl-auto=update` (or `create-drop` for dev). For production, rely on Flyway/Liquibase migrations instead.
-
-## Authentication & Authorization
-
-Two recommended approaches depending on needs:
-
-1. **Server-side rendered Thymeleaf application** (recommended if using Thymeleaf pages)
-
-   * Use Spring Security with form-login and session management.
-   * Store passwords using BCrypt (`BCryptPasswordEncoder`).
-   * Roles map to authorities (e.g. `ROLE_CANDIDATE`, `ROLE_COMPANY`).
-   * Use method-level security (`@PreAuthorize("hasRole('ROLE_COMPANY')")`) on service/controller methods.
-
-2. **REST API + SPA / API-first**
-
-   * Use JWT-based stateless authentication for APIs and separate frontend.
-   * Keep refresh tokens, short-lived access tokens, and implement token blacklisting for logout.
-
-### Example (session-based) Security config outline
+### Security Features
 
 ```java
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig {
-  @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http
-      .csrf().and()
-      .authorizeHttpRequests()
-         .requestMatchers("/auth/**", "/css/**", "/js/**", "/swagger-ui/**").permitAll()
-         .requestMatchers("/admin/**").hasRole("SUPER_ADMIN")
-         .anyRequest().authenticated()
-      .and()
-        .formLogin().loginPage("/auth/login").defaultSuccessUrl("/")
-      .and()
-        .logout().logoutUrl("/auth/logout").logoutSuccessUrl("/auth/login?logout")
-    ;
-    return http.build();
-  }
+@PreAuthorize("hasRole('SUPER_ADMIN')")
+public void adminOnlyMethod() { }
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
-}
+@PreAuthorize("hasAnyRole('COMPANY', 'HIRING_MANAGER')")
+public void postJob() { }
 ```
 
-## Security & Best Practices
+---
 
-* **Password storage**: Always use a strong hashing function such as BCrypt with a secure work factor.
-* **Transport security**: Use HTTPS in production and HSTS header.
-* **CSRF**: Enable CSRF protection for stateful forms (Thymeleaf). For APIs, require CSRF tokens or use stateless tokens properly.
-* **Input validation & output escaping**: Use `@Valid` and server-side validation. Escape user content in Thymeleaf (`th:text`) to avoid XSS.
-* **Principle of least privilege**: Roles should have the minimum permissions necessary.
-* **Avoid storing sensitive data in logs** (passwords, tokens).
-* **Use prepared statements** (JPA does this). Validate and sanitize any dynamic SQL.
-* **Rate limiting**: Add rate limiting on critical endpoints (login, sign-up) to prevent brute force.
-* **Account lockout**: Consider lockouts or CAPTCHA after repeated failed logins.
-* **Secrets management**: Do not hardcode DB credentials; use environment variables or secrets manager.
+## 📡 API Documentation
 
-## Exception Handling, Validation & Logging
+Interactive API documentation is available via Swagger UI:
 
-* Use a global exception handler with `@ControllerAdvice` to format error responses and return proper HTTP codes.
-* Create custom exceptions like `ResourceNotFoundException`, `AccessDeniedException`, `DuplicateResourceException`.
-* Use `@Valid` and validation annotations for DTOs; handle `MethodArgumentNotValidException` in the controller advice.
-* Use SLF4J + Logback for structured logging; log important events (user sign-ups, job postings) at INFO; errors at ERROR with stack trace.
-* For traceability, include request id correlation (UUID) to track logs across requests — use a servlet filter to populate a MDC key.
+**URL:** `http://localhost:8080/swagger-ui.html`
 
-## Frontend (Thymeleaf) notes
+### Key Endpoints
 
-* Keep a layout template (header, footer, nav). Use Thymeleaf layout dialect or fragments to reuse components.
-* Store HTML templates under `src/main/resources/templates` and static assets under `src/main/resources/static` (`/css`, `/js`, `/images`).
-* Use form backing objects (DTOs) for binding; validate with `@Valid` and show errors in the template.
-* Separate pages:
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|--------|
+| GET | `/jobs` | List all jobs | Public |
+| GET | `/jobs/{id}` | Job details | Public |
+| POST | `/jobs` | Create job | Hiring Manager |
+| POST | `/jobs/{id}/apply` | Apply to job | Candidate |
+| GET | `/admin/dashboard` | Admin panel | Super Admin |
 
-  * `/auth/login.html`
-  * `/auth/register.html`
-  * `/jobs/list.html`
-  * `/jobs/detail.html`
-  * `/jobs/create.html` (for hiring managers/companies)
-  * `/dashboard/admin.html`
-  * `/profile/edit.html`
+---
 
-## Configuration & Running Locally
+## 🧪 Testing
 
-### application.properties (dev example)
+### Running Tests
 
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/jobly?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-spring.datasource.username=jobly_user
-spring.datasource.password=CHANGEME
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+```bash
+# Run all tests
+./mvnw test
 
-# Show SQL in log (dev only)
-spring.jpa.show-sql=true
-
-# Thymeleaf
-spring.thymeleaf.cache=false
-
-# Server port (optional)
-server.port=8080
+# Run with coverage
+./mvnw test jacoco:report
 ```
 
-> **Note:** `spring.jpa.hibernate.ddl-auto=update` helps auto-generate schemas during the initial run for dev. In production switch to `validate` and use Flyway/Liquibase migrations.
+### Test Structure
 
-### Running
+- **Unit Tests** - Service layer logic with Mockito
+- **Integration Tests** - Full application context with test database
+- **Controller Tests** - MVC layer with `@WebMvcTest`
 
-1. Create MySQL database and user or configure env variables.
-2. Build: `mvn clean package` or `./gradlew bootJar`.
-3. Run: `mvn spring-boot:run` or run the generated jar: `java -jar target/jobly-0.0.1-SNAPSHOT.jar`.
+---
 
-## Swagger / API Documentation
+## 📦 Deployment
 
-Use Springdoc (OpenAPI) for auto-generating API docs. Example dependency included earlier. By default the UI will be available at `/swagger-ui.html` or `/swagger-ui/index.html`.
+### Building for Production
 
-Provide `@Operation` and `@Schema` annotations on controllers and DTOs for richer docs.
+```bash
+# Create executable JAR
+./mvnw clean package
 
-## Testing
+# Run the JAR
+java -jar target/Jobly-0.0.1-SNAPSHOT.jar
+```
 
-* Unit tests: JUnit 5 + Mockito for service and repository-level logic.
-* Integration tests: `@SpringBootTest` with an embedded DB (H2) and test profiles. Alternatively use Testcontainers for running ephemeral MySQL instances.
-* Controller tests: `@WebMvcTest` for MVC controllers.
-
-## Deployment
-
-* Use externalized configuration (env vars) for DB credentials and secrets.
-* Build a Docker image (multi-stage) with a small JRE runtime. Example `Dockerfile`:
+### Docker Deployment
 
 ```dockerfile
-FROM eclipse-temurin:17-jre
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
+FROM eclipse-temurin:21-jre
+COPY target/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 ```
 
-* For production DB migrations use Flyway; run migrations during CI/CD.
-* Use a reverse proxy (NGINX) and secure with TLS.
+### Environment Variables
 
-## Coding Standards & Best Practices
-
-* **Naming conventions**: Use `camelCase` for variables and methods, `PascalCase` for types and classes, `UPPER_SNAKE_CASE` for constants.
-* **Packages**: Group by feature or layer consistently (layered approach shown above).
-* **Formatting**: Use an opinionated code formatter (Eclipse/IntelliJ formatter or Google Java Format) and enforce with CI pre-commit checks.
-* **Document code**: JavaDoc public service methods and complex logic.
-* **Small methods**: Keep functions focused — single responsibility.
-* **DTOs**: Avoid exposing JPA entities directly to controllers; map entities to DTOs for API/Views.
-* **Transactions**: Annotate service methods that change state with `@Transactional`.
-* **Avoid business logic in controllers** — controllers should be thin.
-* **Logging**: Use parameterized logging (`log.info("User {} logged in", userId)`), avoid string concatenation in logs.
-* **Security reviews**: Review endpoints for excessive privileges.
-
-## Sample Endpoints (MVC + REST hybrid)
-
+```bash
+SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/jobly
+SPRING_DATASOURCE_USERNAME=jobly_user
+SPRING_DATASOURCE_PASSWORD=secure_password
 ```
-GET  /                -> home (job list)
-GET  /jobs            -> list jobs
-GET  /jobs/{id}       -> job detail
-GET  /jobs/new        -> form to create job (company / hiring manager)
-POST /jobs            -> create job
-POST /jobs/{id}/apply -> candidate applies to job
-GET  /admin/dashboard -> admin panel (super admin only)
-POST /auth/register   -> register user
-POST /auth/login      -> login (handled by Spring Security form)
-```
-
-## Example: User entity (simplified)
-
-```java
-@Entity
-@Table(name = "users")
-public class User {
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-
-  @Column(nullable = false)
-  private String name;
-
-  @Column(nullable = false, unique = true)
-  private String email;
-
-  @Column(nullable = false)
-  private String password; // store hashed (BCrypt)
-
-  @ManyToMany(fetch = FetchType.EAGER)
-  @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-  private Set<Role> roles;
-}
-```
-
-## Recommended Development Workflow
-
-1. Use feature branches (`feature/xxx`) and PRs.
-2. Add unit tests for business logic before adding major features.
-3. Run static analysis tools — SpotBugs, PMD, Checkstyle (optional).
-4. Use CI to run tests and build artifacts.
-5. Use database migration files (Flyway) and review migration history.
-
-## Roadmap / Next Steps
-
-* Implement full RBAC with method-level security
-* Implement resume upload & file storage (S3-compatible or local storage for dev)
-* Add search & filter for jobs (Elasticsearch or DB full-text search)
-* Add email notifications for new applications (SMTP or transactional email)
-* Implement pagination & sorting
-* Add analytics for admin dashboard
-
-## Contributing
-
-Contributions are welcome! Please follow the style guidelines, open an issue first for large changes, and create PRs against `develop` branch. Include tests for new logic.
 
 ---
 
-### Final notes & corrections made (based on your brief)
+## 📚 Documentation
 
-* Because you requested Thymeleaf HTML pages, a session-based Spring Security configuration is recommended (rather than JWT) — this simplifies server-side rendering, CSRF handling and form authentication.
-* For automatic table generation at startup, we set `spring.jpa.hibernate.ddl-auto=update` in development. For production, use migration tooling (Flyway/Liquibase) and `ddl-auto=validate`.
-* `Authentication` spelled as `Authentication`; ensured correct naming in the docs.
-* Clarified distinction between Company and Hiring Manager roles (both can post jobs; company represents an organisation, hiring manager is a user tied to a company).
-
----
-
-If you want, I can also:
-
-* produce skeleton Maven/Gradle `pom.xml`/`build.gradle` with exact dependencies,
-* generate sample entity/controller/service/repository code for one feature (e.g., Jobs CRUD + apply flow), or
-* create a minimal Thymeleaf template set for the main pages.
+- [CREDENTIALS.txt](CREDENTIALS.txt) - Test user accounts
+- [HELP.md](HELP.md) - Spring Boot reference
+- [LICENSE](LICENSE) - Project license
 
 ---
 
-*README generated by Jobly README generator.*
+## 🛣️ Roadmap
+
+### Planned Features
+
+- [ ] Resume upload & file storage (S3 integration)
+- [ ] Email notifications (SMTP/SendGrid)
+- [ ] Advanced job search & filtering
+- [ ] Pagination & sorting
+- [ ] Analytics dashboard
+- [ ] Database migrations (Flyway/Liquibase)
+- [ ] REST API for mobile apps
+- [ ] Social authentication (OAuth2)
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+### Coding Standards
+
+- Follow Java naming conventions
+- Use meaningful variable and method names
+- Write JavaDoc for public methods
+- Include unit tests for new features
+- Format code with Google Java Format
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 👨‍💻 Author
+
+**Your Name**
+- GitHub: [@yourusername](https://github.com/yourusername)
+- LinkedIn: [Your Profile](https://linkedin.com/in/yourprofile)
+
+---
+
+## 🙏 Acknowledgments
+
+- Spring Boot team for the excellent framework
+- Thymeleaf community for template engine
+- All contributors and testers
+
+---
+
+<div align="center">
+
+**⭐ Star this repo if you find it helpful!**
+
+Made with ❤️ using Spring Boot
+
+</div>
