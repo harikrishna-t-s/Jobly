@@ -337,29 +337,6 @@ SPRING_DATASOURCE_PASSWORD=secure_password
 
 ---
 
-## 📚 Documentation
-
-- [CREDENTIALS.txt](CREDENTIALS.txt) - Test user accounts
-- [HELP.md](HELP.md) - Spring Boot reference
-- [LICENSE](LICENSE) - Project license
-
----
-
-## 🛣️ Roadmap
-
-### Planned Features
-
-- [ ] Resume upload & file storage (S3 integration)
-- [ ] Email notifications (SMTP/SendGrid)
-- [ ] Advanced job search & filtering
-- [ ] Pagination & sorting
-- [ ] Analytics dashboard
-- [ ] Database migrations (Flyway/Liquibase)
-- [ ] REST API for mobile apps
-- [ ] Social authentication (OAuth2)
-
----
-
 ## 🤝 Contributing
 
 Contributions are welcome! Please follow these steps:
@@ -383,29 +360,3 @@ Contributions are welcome! Please follow these steps:
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 👨‍💻 Author
-
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your Profile](https://linkedin.com/in/yourprofile)
-
----
-
-## 🙏 Acknowledgments
-
-- Spring Boot team for the excellent framework
-- Thymeleaf community for template engine
-- All contributors and testers
-
----
-
-<div align="center">
-
-**⭐ Star this repo if you find it helpful!**
-
-Made with ❤️ using Spring Boot
-
-</div>
