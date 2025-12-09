@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('Applications')"></head>
+<body>
+<header th:replace="fragments/header :: navbar"></header>
+<main class="content">
+    <div class="shell stack">
+        <section class="hero">
+            <p class="muted">Pipeline</p>
+            <h1 th:text="${job.title}">Role</h1>
+            <p class="muted">Review candidates for this opening.</p>
+        </section>
+        <section class="card">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Candidate</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="application : ${applications}">
+                    <td th:text="${application.candidate.fullName}">Name</td>
+                    <td th:text="${application.candidate.email}">email</td>
+                    <td th:text="${application.status}">STATUS</td>
+                    <td>
+                        <form th:action="@{'/applications/' + ${application.id} + '/status'}" method="post" class="stack">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                            <select name="status">
+                                <option th:each="status : ${statuses}"
+                                        th:value="${status}"
+                                        th:text="${status}"
+                                        th:selected="${status} == ${application.status}"></option>
+                            </select>
+                            <button type="submit" class="button ghost">Update</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(applications)}">
+                    <td colspan="4" class="muted">No applications yet.</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

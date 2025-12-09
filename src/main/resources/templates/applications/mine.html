@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('My Applications')"></head>
+<body>
+<header th:replace="fragments/header :: navbar"></header>
+<main class="content">
+    <div class="shell stack">
+        <section class="hero">
+            <p class="muted">Activity</p>
+            <h1>My applications</h1>
+            <p class="muted">Track the status of roles you applied for.</p>
+        </section>
+        <section class="card">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Role</th>
+                    <th>Company</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="application : ${applications}">
+                    <td>
+                        <a th:href="@{'/jobs/' + ${application.job.id}}"
+                           th:text="${application.job.title}">Job</a>
+                    </td>
+                    <td th:text="${application.job.company.name}">Company</td>
+                    <td th:text="${application.status}">STATUS</td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(applications)}">
+                    <td colspan="3" class="muted">No applications yet.</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

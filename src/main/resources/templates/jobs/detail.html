@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header :: head(${job.title})"></head>
+<body>
+<header th:replace="fragments/header :: navbar"></header>
+<main class="content narrow">
+    <div class="shell">
+        <article class="card stack">
+            <div class="card-head">
+                <div>
+                    <p class="muted">Role</p>
+                    <h1 th:text="${job.title}">Job title</h1>
+                    <p class="muted" th:text="${job.companyName}">Company</p>
+                </div>
+                <span class="tag" th:text="${job.status}">OPEN</span>
+            </div>
+            <p class="muted" th:text="${job.location}">Location</p>
+            <section class="stack">
+                <h2>About the role</h2>
+                <p th:text="${job.description}">Job description</p>
+            </section>
+            <section class="details">
+                <div>
+                    <span class="label">Employment</span>
+                    <p th:text="${job.employmentType}">Full Time</p>
+                </div>
+                <div>
+                    <span class="label">Salary range</span>
+                    <p th:text="${job.salaryMin} + ' - ' + ${job.salaryMax}">-</p>
+                </div>
+            </section>
+            <div class="card-actions">
+                <a th:href="@{'/jobs/' + ${job.id} + '/apply'}" class="button"
+                   sec:authorize="hasRole('CANDIDATE')">Apply</a>
+                <p class="muted" sec:authorize="isAnonymous()">Sign in as Candidate to apply.</p>
+            </div>
+            <div class="card-actions" th:if="${canManage}">
+                <a th:href="@{'/jobs/' + ${job.id} + '/edit'}" class="button ghost">Edit job</a>
+                <a th:href="@{'/jobs/' + ${job.id} + '/applications'}" class="button ghost">Applications</a>
+                <form th:action="@{'/jobs/' + ${job.id} + '/delete'}" method="post">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <button type="submit" class="button">Delete job</button>
+                </form>
+            </div>
+        </article>
+    </div>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

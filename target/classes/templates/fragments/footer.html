@@ -1,0 +1,6 @@
+<footer xmlns:th="http://www.thymeleaf.org" class="app-footer" th:fragment="footer">
+    <div class="shell">
+        <p>© <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span> Jobly</p>
+        <p class="muted">Minimal, monochrome job platform.</p>
+    </div>
+</footer>

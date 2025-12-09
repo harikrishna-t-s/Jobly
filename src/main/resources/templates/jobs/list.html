@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('Jobs')"></head>
+<body>
+<header th:replace="fragments/header :: navbar"></header>
+<main class="content">
+    <div class="shell">
+        <section class="hero">
+            <p class="muted">Open opportunities</p>
+            <h1>Minimal roles board</h1>
+            <p class="muted">Search, skim, and apply without distractions.</p>
+        </section>
+        <section class="grid">
+            <article class="card" th:each="job : ${jobs}">
+                <div class="card-head">
+                    <div>
+                        <h2 th:text="${job.title}">Job title</h2>
+                        <p class="muted" th:text="${job.companyName}">Company</p>
+                    </div>
+                    <span class="tag" th:text="${job.employmentType}">FULL_TIME</span>
+                </div>
+                <p th:text="${job.location}">Location</p>
+                <div class="card-actions">
+                    <a th:href="@{'/jobs/' + ${job.id}}" class="button ghost">View</a>
+                </div>
+            </article>
+            <p th:if="${#lists.isEmpty(jobs)}" class="muted">No roles yet. Check back soon.</p>
+        </section>
+    </div>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<head xmlns:th="http://www.thymeleaf.org" th:fragment="head(pageTitle)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} ?: 'Jobly'">Jobly</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+
+<header xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+        th:fragment="navbar" class="app-header">
+    <div class="shell">
+        <a class="brand" th:href="@{/}">Jobly</a>
+        <nav class="nav" aria-label="Main navigation">
+            <ul class="nav-list">
+                <li><a th:href="@{/}">Jobs</a></li>
+                <li sec:authorize="hasAnyRole('COMPANY','HIRING_MANAGER')"><a th:href="@{/jobs/new}">Post</a></li>
+                <li sec:authorize="hasAnyRole('COMPANY','HIRING_MANAGER')"><a th:href="@{/jobs/mine}">My Jobs</a></li>
+                <li sec:authorize="hasRole('CANDIDATE')"><a th:href="@{/applications/mine}">My Applications</a></li>
+                <li sec:authorize="hasRole('SUPER_ADMIN')"><a th:href="@{/admin/dashboard}">Admin</a></li>
+                <li sec:authorize="isAnonymous()"><a th:href="@{/auth/login}">Login</a></li>
+                <li sec:authorize="isAnonymous()"><a th:href="@{/auth/register}">Register</a></li>
+                <li sec:authorize="isAuthenticated()">
+                    <form th:action="@{/auth/logout}" method="post">
+                        <button type="submit" class="linkish">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('Admin Dashboard')"></head>
+<body>
+<header th:replace="fragments/header :: navbar"></header>
+<main class="content">
+    <div class="shell stack">
+        <section class="hero">
+            <p class="muted">Control room</p>
+            <h1>Admin dashboard</h1>
+            <p class="muted">Monitor roles, companies, and user health at a glance.</p>
+        </section>
+        <section class="grid">
+            <article class="card stack">
+                <div class="card-head">
+                    <div>
+                        <p class="muted">Users</p>
+                        <h2>Role mix</h2>
+                    </div>
+                </div>
+                <ul class="stack">
+                    <li>Super admins · <strong th:text="${superAdminCount}">0</strong></li>
+                    <li>Companies · <strong th:text="${companyCount}">0</strong></li>
+                    <li>Hiring managers · <strong th:text="${hiringManagerCount}">0</strong></li>
+                    <li>Candidates · <strong th:text="${candidateCount}">0</strong></li>
+                </ul>
+            </article>
+            <article class="card stack">
+                <div class="card-head">
+                    <div>
+                        <p class="muted">Open roles</p>
+                        <h2>Jobs snapshot</h2>
+                    </div>
+                </div>
+                <ul class="stack">
+                    <li th:each="job : ${jobs}">
+                        <strong th:text="${job.title}">Job</strong>
+                        <span class="muted" th:text="${job.companyName}">Company</span>
+                    </li>
+                    <li th:if="${#lists.isEmpty(jobs)}" class="muted">No jobs yet.</li>
+                </ul>
+            </article>
+            <article class="card stack">
+                <div class="card-head">
+                    <div>
+                        <p class="muted">Partners</p>
+                        <h2>Companies</h2>
+                    </div>
+                </div>
+                <ul class="stack">
+                    <li th:each="company : ${companies}" th:text="${company.name}">Company</li>
+                    <li th:if="${#lists.isEmpty(companies)}" class="muted">No companies yet.</li>
+                </ul>
+            </article>
+        </section>
+        <section class="card">
+            <div class="card-head">
+                <div>
+                    <p class="muted">Newest activity</p>
+                    <h2>Recent users</h2>
+                </div>
+                <div class="alert success" th:if="${successMessage}" th:text="${successMessage}"></div>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${recentUsers}">
+                    <td th:text="${user.fullName}">Name</td>
+                    <td th:text="${user.email}">email</td>
+                    <td th:text="${user.enabled} ? 'Enabled' : 'Disabled'">status</td>
+                    <td>
+                        <form th:action="@{'/admin/users/' + ${user.id} + '/toggle'}" method="post">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                            <button type="submit" class="button ghost">Toggle</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(recentUsers)}">
+                    <td colspan="4" class="muted">No users yet.</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

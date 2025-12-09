@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header :: head('Register')"></head>
+<body>
+<header th:replace="fragments/header :: navbar"></header>
+<main class="content narrow">
+    <div class="shell">
+        <section class="card stack">
+            <p class="muted">Onboard</p>
+            <h1>Create account</h1>
+            <div class="alert" th:if="${#fields.hasErrors()}" th:text="${#fields.errors('fullName')}" hidden></div>
+            <form th:action="@{/auth/register}" th:object="${registerRequest}" method="post" class="stack">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <label>Full name
+                    <input type="text" th:field="*{fullName}" placeholder="Jane Doe" required>
+                </label>
+                <label>Email
+                    <input type="email" th:field="*{email}" placeholder="you@example.com" required>
+                </label>
+                <label>Phone
+                    <input type="text" th:field="*{phone}" placeholder="+1 555 0100">
+                </label>
+                <label>Password
+                    <input type="password" th:field="*{password}" required>
+                </label>
+                <label>Role
+                    <select th:field="*{role}" required>
+                        <option value="" disabled selected>Select role</option>
+                        <option value="ROLE_CANDIDATE">Candidate</option>
+                        <option value="ROLE_COMPANY">Company</option>
+                        <option value="ROLE_HIRING_MANAGER">Hiring Manager</option>
+                    </select>
+                </label>
+                <div class="two-col">
+                    <label>Company name
+                        <input type="text" th:field="*{companyName}" placeholder="Acme Inc">
+                    </label>
+                    <label>Company website
+                        <input type="url" th:field="*{companyWebsite}" placeholder="https://acme.com">
+                    </label>
+                </div>
+                <label>Company description
+                    <textarea th:field="*{companyDescription}" rows="3"></textarea>
+                </label>
+                <button type="submit">Register</button>
+            </form>
+            <p class="muted">Already have an account? <a th:href="@{/auth/login}">Login</a>.</p>
+        </section>
+    </div>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

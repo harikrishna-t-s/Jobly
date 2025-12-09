@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('Edit Job')"></head>
+<body>
+<header th:replace="fragments/header :: navbar"></header>
+<main class="content narrow">
+    <div class="shell">
+        <section class="card stack">
+            <p class="muted">Adjust role</p>
+            <h1>Edit job</h1>
+            <form th:action="@{'/jobs/' + ${jobId}}" th:object="${jobRequest}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <div class="field" th:classappend="${#fields.hasErrors('title')} ? ' has-error'">
+                <label>Title
+                    <input type="text" th:field="*{title}" required>
+                </label>
+                <p class="field-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+            </div>
+            <div class="field" th:classappend="${#fields.hasErrors('description')} ? ' has-error'">
+                <label>Description
+                    <textarea th:field="*{description}" rows="6" required></textarea>
+                </label>
+                <p class="field-error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+            </div>
+            <div class="two-col">
+                <div class="field" th:classappend="${#fields.hasErrors('location')} ? ' has-error'">
+                    <label>Location
+                        <input type="text" th:field="*{location}" required>
+                    </label>
+                    <p class="field-error" th:if="${#fields.hasErrors('location')}" th:errors="*{location}"></p>
+                </div>
+                <div class="field">
+                    <label>Employment type
+                        <select th:field="*{employmentType}" required>
+                            <option value="FULL_TIME">Full time</option>
+                            <option value="PART_TIME">Part time</option>
+                            <option value="CONTRACT">Contract</option>
+                            <option value="INTERN">Intern</option>
+                            <option value="TEMPORARY">Temporary</option>
+                            <option value="FREELANCE">Freelance</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+            <div class="two-col">
+                <div class="field">
+                    <label>Salary min
+                        <input type="number" th:field="*{salaryMin}">
+                    </label>
+                </div>
+                <div class="field">
+                    <label>Salary max
+                        <input type="number" th:field="*{salaryMax}">
+                    </label>
+                </div>
+            </div>
+            <div class="field">
+                <label>Company
+                    <select th:field="*{companyId}" required>
+                        <option th:each="company : ${companies}"
+                                th:value="${company.id}"
+                                th:text="${company.name}"></option>
+                    </select>
+                </label>
+            </div>
+            <button type="submit">Save changes</button>
+        </form>
+        </section>
+    </div>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>
